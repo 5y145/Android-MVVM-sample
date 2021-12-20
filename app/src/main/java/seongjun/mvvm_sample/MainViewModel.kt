@@ -4,12 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import seongjun.mvvm_sample.model.Movie
 import seongjun.mvvm_sample.model.RetrofitData
-import seongjun.mvvm_sample.repository.AppDataBase
 import seongjun.mvvm_sample.repository.Repository
 
 class MainViewModel(private val repository: Repository): ViewModel() {

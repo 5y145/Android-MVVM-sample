@@ -3,7 +3,6 @@ package seongjun.mvvm_sample.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import retrofit2.Response
-import seongjun.mvvm_sample.model.Movie
 import seongjun.mvvm_sample.model.RetrofitData
 import seongjun.mvvm_sample.repository.retrofit.RetrofitInstance
 

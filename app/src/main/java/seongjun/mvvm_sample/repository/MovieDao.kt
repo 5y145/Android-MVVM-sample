@@ -2,7 +2,6 @@ package seongjun.mvvm_sample.repository
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import seongjun.mvvm_sample.model.Movie
 
 @Dao
 interface MovieDao {

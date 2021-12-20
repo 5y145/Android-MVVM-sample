@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import seongjun.mvvm_sample.databinding.ActivityMainBinding
-import seongjun.mvvm_sample.model.Movie
 import seongjun.mvvm_sample.repository.Repository
 
 class MainActivity : AppCompatActivity() {
