@@ -1,48 +1,93 @@
 package seongjun.mvvm_sample
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import retrofit2.Response
-import seongjun.mvvm_sample.model.RetrofitData
+import seongjun.mvvm_sample.model.RetrofitTodoData
+import seongjun.mvvm_sample.model.RoomTodoData
 import seongjun.mvvm_sample.repository.Repository
 
 class MainViewModel(private val repository: Repository): ViewModel() {
 
-    val movieList = repository.selectAllMovie()
+    val roomTodoList: LiveData<List<RoomTodoData>> = repository.selectRoomAllTodo()
+    val retrofitTodoList: MutableLiveData<List<RetrofitTodoData>> = MutableLiveData()
 
 
-    //////////////////
-    val myResponse : MutableLiveData<Response<RetrofitData>> = MutableLiveData()
+//    val myResponse : MutableLiveData<Response<RetrofitData>> = MutableLiveData()
 
-    fun getPost() {
+
+
+//    fun getPost() {
+//        viewModelScope.launch {
+//            val response = repository.getPost()
+//            myResponse.value = response
+//        }
+//    }
+
+    // 코루틴으로 Room 제어
+    fun insertRoom(roomTodoData: RoomTodoData) = viewModelScope.launch {
+        repository.insertRoomTodo(roomTodoData)
+    }
+
+    fun deleteRoom(roomTodoData: RoomTodoData) = viewModelScope.launch {
+        repository.deleteRoomTodo(roomTodoData)
+    }
+
+    fun deleteAllRoom() = viewModelScope.launch {
+        repository.deleteRoomAllTodo()
+    }
+
+    // 코루틴으로 Retrofit 제어
+    fun selectAllRetrofit() {
+        Log.d("DEBUG", "호출2")
         viewModelScope.launch {
-            val response = repository.getPost()
-            myResponse.value = response
+            val response = repository.selectRetrofitAllTodo()
+            if (response.isSuccessful) {
+                retrofitTodoList.value = response.body() as List<RetrofitTodoData>
+                Log.d("DEBUG", "호출3 ${retrofitTodoList.value}")
+            } else {
+                Log.d("DEBUG", response.errorBody().toString())
+            }
         }
     }
 
-    fun insertMovie(movie: Movie) = viewModelScope.launch {
-        repository.insertMovie(movie)
+    fun insertRetrofit(retrofitTodoData: RetrofitTodoData) {
+        viewModelScope.launch {
+            val response = repository.insertRetrofitTodo(retrofitTodoData)
+            if (response.isSuccessful) {
+                // ...
+            } else {
+                Log.d("DEBUG", response.errorBody().toString())
+            }
+        }
     }
 
-    fun updateMovie(movie: Movie) = viewModelScope.launch {
-        repository.updateMovie(movie)
+    fun deleteRetrofit(retrofitTodoData: RetrofitTodoData) {
+        viewModelScope.launch {
+            val response = repository.deleteRetrofitTodo(retrofitTodoData)
+            if (response.isSuccessful) {
+                // ...
+            } else {
+                Log.d("DEBUG", response.errorBody().toString())
+            }
+        }
     }
 
-    fun deleteMovie(movie: Movie) = viewModelScope.launch {
-        repository.deleteMovie(movie)
+    fun deleteAllRetrofit() {
+        viewModelScope.launch {
+            val response = repository.deleteRetrofitAllTodo()
+            if (response.isSuccessful) {
+                // ...
+            } else {
+                Log.d("DEBUG", response.errorBody().toString())
+            }
+        }
     }
 
-    fun deleteAllMovie() = viewModelScope.launch {
-        repository.deleteAllMovie()
-    }
-
-    class Factory(private val repository : Repository) : ViewModelProvider.Factory {
+    class Factory(private val application : Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return MainViewModel(repository) as T
+            return MainViewModel(Repository(application)) as T
         }
     }
 }

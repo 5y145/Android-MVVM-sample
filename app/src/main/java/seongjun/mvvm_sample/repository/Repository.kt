@@ -3,40 +3,54 @@ package seongjun.mvvm_sample.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import retrofit2.Response
-import seongjun.mvvm_sample.model.RetrofitData
+import seongjun.mvvm_sample.model.RetrofitTodoData
+import seongjun.mvvm_sample.model.RoomTodoData
 import seongjun.mvvm_sample.repository.retrofit.RetrofitInstance
+import seongjun.mvvm_sample.repository.room.AppDataBase
+
+/**
+LiveData<type> : JetPack의 AAC 구성요소입니다.
+Response<type> : 레트로핏으로 통신할때의 반환형입니다. 통신 성공 / 실패에 대한 정보를 포함합니다.
+ **/
 
 class Repository(context: Context) {
 
+    // Room
     val dataBase = AppDataBase.getInstance(context)
-    val movieDao = dataBase!!.movieDao()
+    val todoDao = dataBase!!.getTodoDao()
 
-    val movieList: LiveData<List<Movie>> = movieDao.selectAll()
+    val roomTodoList: LiveData<List<RoomTodoData>> = todoDao.selectAll()
 
-    /////////////
-    fun selectAllMovie(): LiveData<List<Movie>>{
-        return movieList
+    fun selectRoomAllTodo(): LiveData<List<RoomTodoData>>{
+        return roomTodoList
     }
 
-    suspend fun insertMovie(movie: Movie) {
-        movieDao.insert(movie)
+    suspend fun insertRoomTodo(romTodoData: RoomTodoData) {
+        todoDao.insert(romTodoData)
     }
 
-    suspend fun updateMovie(movie: Movie) {
-        movieDao.update(movie)
+    suspend fun deleteRoomTodo(romTodoData: RoomTodoData) {
+        todoDao.delete(romTodoData)
     }
 
-    suspend fun deleteMovie(movie: Movie) {
-        movieDao.delete(movie)
+    suspend fun deleteRoomAllTodo() {
+        todoDao.deleteAll()
     }
 
-    suspend fun deleteAllMovie() {
-        movieDao.deleteAll()
+    // Retrofit
+    suspend fun selectRetrofitAllTodo() : Response<List<RetrofitTodoData>> {
+        return RetrofitInstance.api.selectAllTodo()
     }
 
-    ///////////////////////////////
+    suspend fun insertRetrofitTodo(retrofitTodoData: RetrofitTodoData) : Response<Boolean> {
+        return RetrofitInstance.api.insertTodo(retrofitTodoData)
+    }
 
-    suspend fun getPost() : Response<RetrofitData> {
-        return RetrofitInstance.api.getPost()
+    suspend fun deleteRetrofitTodo(retrofitTodoData: RetrofitTodoData) : Response<Boolean> {
+        return RetrofitInstance.api.deleteTodo(retrofitTodoData)
+    }
+
+    suspend fun deleteRetrofitAllTodo() : Response<Boolean> {
+        return RetrofitInstance.api.deleteAllTodo()
     }
 }

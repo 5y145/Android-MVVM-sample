@@ -1,7 +1,6 @@
 package seongjun.mvvm_sample
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,52 +8,62 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import seongjun.mvvm_sample.databinding.ActivityMainBinding
-import seongjun.mvvm_sample.repository.Repository
+import seongjun.mvvm_sample.model.RetrofitTodoData
+import seongjun.mvvm_sample.model.RoomTodoData
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    private val viewModel by lazy { ViewModelProvider(this,MainViewModel.Factory(Repository(application))).get(MainViewModel::class.java) }
-    private val mAdapter = MyAdapter()
+    private val viewModel by lazy { ViewModelProvider(this,MainViewModel.Factory(application))[MainViewModel::class.java] }
+    private val roomAdapter = MyAdapter(1)
+    private val retrofitAdapter = MyAdapter(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.rv.apply {
+        viewModel.selectAllRetrofit()
+        Log.d("DEBUG", "호출")
+
+        binding.rvRoom.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = mAdapter
+            adapter = roomAdapter
         }
 
-        binding.btn.setOnClickListener {
-            viewModel.insertMovie(Movie(0, binding.et.text.toString()))
-            viewModel.getPost()
+        binding.rvRetrofit.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = retrofitAdapter
+        }
+
+        binding.btn1.setOnClickListener {
+            viewModel.insertRoom(RoomTodoData(0, binding.et1.text.toString()))
+            binding.et1.setText("")
+        }
+
+        binding.btn2.setOnClickListener {
+            viewModel.insertRetrofit(RetrofitTodoData(0, binding.et1.text.toString()))
+            binding.et2.setText("")
         }
         
-        viewModel.movieList.observe(this, {
-            mAdapter.setData(viewModel.movieList.value!!)
+        viewModel.roomTodoList.observe(this, {
+            roomAdapter.setRoomData(viewModel.roomTodoList.value!!)
         })
 
-        viewModel.myResponse.observe(this, {
-            if (it.isSuccessful) {
-                val title = it.body()?.myUserId!!
-                Toast.makeText(this, "$title", Toast.LENGTH_SHORT).show()
-            } else {
-                Log.d("Response",it.errorBody().toString())
-                Log.d("Response",it.code().toString()) // 404
-            }
+        viewModel.retrofitTodoList.observe(this, {
+                roomAdapter.setRetrofitData(it)
+                Log.d("DEBUG", "호출4 ${it}")
         })
     }
 
-    inner class MyAdapter: RecyclerView.Adapter<MyAdapter.CustomViewHolder>() {
+    inner class MyAdapter(val type: Int): RecyclerView.Adapter<MyAdapter.CustomViewHolder>() {
 
-        private var list = emptyList<Movie>()
+        private var roomList = emptyList<RoomTodoData>()
+        private var retrofitList = emptyList<RetrofitTodoData>()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false)
@@ -63,31 +72,54 @@ class MainActivity : AppCompatActivity() {
 
         @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-            holder.tvId.text = "id : ${list[position].id}"
-            holder.tvTitle.text ="title : ${list[position].title}"
 
-            holder.itemView.setOnClickListener {
-                startActivity(Intent(this@MainActivity, DetailActivity::class.java).apply { putExtra("id", list[position].id) })
+            if (type == 1) {
+                holder.tvWord.text = "${roomList[position].word}"
+                holder.tvId.text ="${roomList[position].id}"
+
+                holder.itemView.setOnClickListener {
+                    // ...
+                }
+
+                holder.itemView.setOnLongClickListener {
+                    viewModel.deleteRoom(roomList[position])
+                    return@setOnLongClickListener false
+                }
             }
 
-            holder.itemView.setOnLongClickListener {
-                viewModel.deleteMovie(list[position])
-                return@setOnLongClickListener false
+            if (type == 2) {
+                holder.tvWord.text = "${retrofitList[position].word}"
+                holder.tvId.text ="${retrofitList[position].id}"
+
+                holder.itemView.setOnClickListener {
+                    // ...
+                }
+
+                holder.itemView.setOnLongClickListener {
+                    viewModel.deleteRetrofit(retrofitList[position])
+                    return@setOnLongClickListener false
+                }
             }
         }
 
         override fun getItemCount(): Int {
-            return list.size
+            if (type == 1) return roomList.size
+            else return retrofitList.size
         }
 
-        fun setData(newList: List<Movie>) {
-            list = newList
+        fun setRoomData(r: List<RoomTodoData>) {
+            roomList = r
+            notifyDataSetChanged()
+        }
+
+        fun setRetrofitData(r: List<RetrofitTodoData>) {
+            retrofitList = r
             notifyDataSetChanged()
         }
 
         inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val tvWord: TextView = itemView.findViewById(R.id.tvWord)
             val tvId: TextView = itemView.findViewById(R.id.tvId)
-            val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
         }
     }
 }
