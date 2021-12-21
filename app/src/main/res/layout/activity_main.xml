@@ -4,73 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:orientation="horizontal"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Room Data"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRoom"
-        android:layout_margin="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
-
     <LinearLayout
-        android:layout_margin="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Room Data"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRoom"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <EditText
             android:id="@+id/et1"
-            android:layout_width="0dp"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:hint="입력해주세요." />
 
         <Button
             android:id="@+id/btn1"
-            android:layout_marginStart="8dp"
-            android:layout_width="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="등록" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Retrofit Data"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRetrofit"
-        android:layout_margin="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
-
     <LinearLayout
-        android:layout_margin="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Retrofit Data"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRetrofit"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <EditText
             android:id="@+id/et2"
-            android:layout_width="0dp"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:hint="입력해주세요." />
 
         <Button
             android:id="@+id/btn2"
-            android:layout_marginStart="8dp"
-            android:layout_width="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="등록" />
     </LinearLayout>
