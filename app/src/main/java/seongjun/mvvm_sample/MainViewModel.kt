@@ -23,23 +23,19 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     }
 
     // 코루틴으로 Retrofit 제어
-    fun selectAllRetrofit() {
-        repository.retrofitTodoList = repository.retrofitSelectAllTodo()
-    }
-
     fun insertRetrofit(todo: RetrofitTodoData) = viewModelScope.launch {
         val response = repository.retrofitInsertTodo(todo)
+
         if (response.isSuccessful) {
-            // ...
-            selectAllRetrofit()
+            repository.retrofitReloadAllTodo()
         } else { Log.d("DEBUG", response.errorBody().toString()) }
     }
 
     fun deleteRetrofit(todo: RetrofitTodoData) = viewModelScope.launch {
         val response = repository.retrofitDeleteTodo(todo)
+
         if (response.isSuccessful) {
-            // ...
-            selectAllRetrofit()
+            repository.retrofitReloadAllTodo()
         } else { Log.d("DEBUG", response.errorBody().toString()) }
     }
 

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProvider(this,MainViewModel.Factory(application))[MainViewModel::class.java] }
 
     private val roomAdapter by lazy {
-        RoomAdapter(this, listOf()).apply {
+        RoomAdapter(this, emptyList()).apply {
             setOnItemClickListener(object: RoomAdapter.OnItemClickListener{
                 override fun onItemClick(v: View, item: RoomTodoData) {}
                 override fun onItemLongClick(v: View, item: RoomTodoData) {
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val retrofitAdapter by lazy {
-        RetrofitAdapter(this, listOf()).apply {
+        RetrofitAdapter(this, emptyList()).apply {
             setOnItemClickListener(object: RetrofitAdapter.OnItemClickListener{
                 override fun onItemClick(v: View, item: RetrofitTodoData) {}
                 override fun onItemLongClick(v: View, item: RetrofitTodoData) {

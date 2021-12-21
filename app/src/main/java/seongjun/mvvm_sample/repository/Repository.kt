@@ -27,10 +27,15 @@ class Repository(context: Context) {
 
     // Room Data
     val roomTodoList: LiveData<List<RoomTodoData>> = roomSelectAllTodo()
-    var retrofitTodoList: MutableLiveData<List<RetrofitTodoData>> = retrofitSelectAllTodo()
+    var retrofitTodoList: MutableLiveData<List<RetrofitTodoData>> = MutableLiveData<List<RetrofitTodoData>>().apply { setValue(emptyList()) }
+
+    init {
+        retrofitReloadAllTodo()
+        Log.d("debug", "first reload")
+    }
 
     // Use Room
-    fun roomSelectAllTodo(): LiveData<List<RoomTodoData>>{
+    fun roomSelectAllTodo(): LiveData<List<RoomTodoData>> {
         return todoDao.selectAllTodo()
     }
 
@@ -43,27 +48,28 @@ class Repository(context: Context) {
     }
 
     // Use Retrofit
-    fun retrofitSelectAllTodo(): MutableLiveData<List<RetrofitTodoData>> {
-        val result: MutableLiveData<List<RetrofitTodoData>> = MutableLiveData<List<RetrofitTodoData>>()
+    fun retrofitReloadAllTodo(){
         CoroutineScope(Dispatchers.IO).launch {
-            val response = RetrofitInstance.api.selectAllTodo()
-            if (response.isSuccessful) {
-//                result.setValue(response.body() as List<RetrofitTodoData>)
-            }
-            else Log.d("DEBUG", response.errorBody().toString())
+            val result = retrofitSelectAllTodo()
+            retrofitTodoList.postValue(result)
+            Log.d("debug", "reload: $retrofitTodoList")
+        }
+    }
+
+    suspend fun retrofitSelectAllTodo(): List<RetrofitTodoData> {
+        var result: List<RetrofitTodoData> = emptyList()
+        val response = RetrofitInstance.api.selectAllTodo()
+        if (response.isSuccessful) {
+            result = response.body() as List<RetrofitTodoData>
         }
         return result
     }
 
-    fun getRetrofit(): MutableLiveData<List<RetrofitTodoData>> {
-        
+    suspend fun retrofitInsertTodo(todo: RetrofitTodoData) : Response<Unit> {
+        return RetrofitInstance.api.insertTodo(todo.word)
     }
 
-    suspend fun retrofitInsertTodo(todo: RetrofitTodoData) : Response<Boolean> {
-        return RetrofitInstance.api.insertTodo(todo)
-    }
-
-    suspend fun retrofitDeleteTodo(todo: RetrofitTodoData) : Response<Boolean> {
-        return RetrofitInstance.api.deleteTodo(todo)
+    suspend fun retrofitDeleteTodo(todo: RetrofitTodoData) : Response<Unit> {
+        return RetrofitInstance.api.deleteTodo(todo.id)
     }
 }

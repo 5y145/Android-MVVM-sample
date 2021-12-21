@@ -1,10 +1,7 @@
 package seongjun.mvvm_sample.repository.retrofit
 
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 import seongjun.mvvm_sample.model.RetrofitTodoData
 
 /**
@@ -23,9 +20,9 @@ interface RetrofitApi {
     @GET("todo")
     suspend fun selectAllTodo() : Response<List<RetrofitTodoData>>
 
-    @POST("todo")
-    suspend fun insertTodo(@Body todo: RetrofitTodoData) : Response<Boolean>
+    @POST("todo/{word}")
+    suspend fun insertTodo(@Path("word") word: String) : Response<Unit>
 
-    @DELETE("todo")
-    suspend fun deleteTodo(@Body todo: RetrofitTodoData) : Response<Boolean>
+    @DELETE("todo/{id}")
+    suspend fun deleteTodo(@Path("id") id: Int) : Response<Unit>
 }
