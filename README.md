@@ -56,6 +56,7 @@ manifest
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
+gradle.app
 ```
 plugins {
     ...
