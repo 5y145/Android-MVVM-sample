@@ -10,8 +10,7 @@ JetPack을 활용한 MVVM repository 패턴 프로젝트의 예제입니다.
 <img src="https://img.shields.io/badge/Kotlin-3178C6?style=flat-square&logo=Kotlin&logoColor=white"/>
 </p>
 
-![mvvm_sample](https://user-images.githubusercontent.com/95672282/146951469-9cf538fb-c50f-4e01-b93f-929fbb800f68.gif)
-<img src="https://user-images.githubusercontent.com/95672282/146952254-2e6508a4-b0a1-44f7-9593-e29d7b224c62.png" width="70%" height="70%">
+<img src="https://user-images.githubusercontent.com/95672282/147233986-50ba83c8-b03f-4247-9c65-83579690431b.gif" width="25%" height="25%">
 
 </div>
 
@@ -43,6 +42,7 @@ MVVM repository 패턴을 구현한 예제입니다.
 # 🏭 Architecture
 
 - `MVVM Repository`
+<img src="https://user-images.githubusercontent.com/95672282/146952254-2e6508a4-b0a1-44f7-9593-e29d7b224c62.png" width="50%" height="50%">
 
 # ⚙️ Setting
 
