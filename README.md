@@ -19,12 +19,11 @@ JetPack을 활용한 MVVM repository 패턴 프로젝트의 예제입니다.
 
 # 📝 Introduce
 ```
-MVVM 패턴을 공부하는데 적절한 자료를 찾기 어려웠고 자세히 공부해볼 겸 만들게 되었습니다.
-프로젝트를 실행시키면 동일한 화면을 보실 수 있습니다.
+MVVM repository 패턴을 구현한 예제입니다.
+설명이 필요한 부분에 주석을 달아 놓았습니다.
 
-💡왼  쪽 : Room을 사용해, 로컬에서 가져온 데이터를 보여줍니다.
-💡오른쪽 : Retrofit을 사용해, 서버에서 가져온 데이터를 보여줍니다.
-💡Coroutine을 사용해 비동기 처리를 하였습니다.
+💡Room과 Retrofit을 사용해 데이터를 가져오는 예제입니다.
+💡비동기 작업을 위해 Coroutine을 사용하였습니다.
 🔥단어를 꾹 누르면 데이터가 삭제됩니다.
 ```
 
@@ -33,9 +32,11 @@ MVVM 패턴을 공부하는데 적절한 자료를 찾기 어려웠고 자세히
  - `Kotlin`
  - `JetPack`
  - `AAC`
+ - `View Binding`
+ - `Data Binding`
  - `ViewModel`
  - `LiveData`
- - `Room DB`
+ - `Room`
  - `Retrofit`
  - `Coroutine`
 
