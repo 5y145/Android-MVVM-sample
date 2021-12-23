@@ -10,7 +10,7 @@ import seongjun.mvvm_sample.model.RoomTodoData
 
 onConflict = OnConflictStrategy : 검색해보면 여러 옵션을 알 수 있습니다.
 
-suspend 함수 : 코루틴 개념입니다. 공부하시는것을 추천합니다.
+suspend 함수 : 코루틴 개념입니다.
  **/
 
 @Dao

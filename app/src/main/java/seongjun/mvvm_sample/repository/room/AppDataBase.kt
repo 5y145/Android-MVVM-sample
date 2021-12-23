@@ -1,6 +1,6 @@
 package seongjun.mvvm_sample.repository.room
 
-import android.content.Context
+import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -22,14 +22,13 @@ abstract class AppDataBase: RoomDatabase() {
     abstract fun getTodoDao(): TodoDao
 
     companion object {
-
-        const val DB_NAME = "db_name"
+        private const val DB_NAME = "db_name"
         private var instance: AppDataBase? = null
 
-        fun getInstance(context: Context): AppDataBase? { // 싱글톤 패턴
+        fun getInstance(application : Application): AppDataBase? {
             if (instance == null) {
                 synchronized(this){
-                    instance = Room.databaseBuilder(context.applicationContext, AppDataBase::class.java, DB_NAME).build()
+                    instance = Room.databaseBuilder(application, AppDataBase::class.java, DB_NAME).build()
                 }
             }
             return instance

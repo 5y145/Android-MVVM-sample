@@ -1,25 +1,24 @@
 package seongjun.mvvm_sample.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import seongjun.mvvm_sample.R
+import seongjun.mvvm_sample.databinding.ItemRoomBinding
 import seongjun.mvvm_sample.model.RoomTodoData
 
-class RoomAdapter(private val context: Context, private var list: List<RoomTodoData>): RecyclerView.Adapter<RoomAdapter.CustomViewHolder>() {
+class RoomAdapter(): RecyclerView.Adapter<RoomAdapter.Holder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false)
-        return CustomViewHolder(view)
+    private var list: List<RoomTodoData> = ArrayList()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val binding = ItemRoomBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return Holder(binding)
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.tvWord.text = list[position].word
-        holder.tvId.text = list[position].id.toString()
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        holder.bind(list[position])
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(holder.itemView, list[position])
@@ -48,14 +47,10 @@ class RoomAdapter(private val context: Context, private var list: List<RoomTodoD
     }
 
     private var listener : OnItemClickListener? = null
-
-    fun setOnItemClickListener(listener : OnItemClickListener) {
-        this.listener = listener
-    }
+    fun setOnItemClickListener(listener : OnItemClickListener) { this.listener = listener }
 
     // ViewHolder
-    inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvWord: TextView = itemView.findViewById(R.id.tvWord)
-        val tvId: TextView = itemView.findViewById(R.id.tvId)
+    class Holder(val binding: ItemRoomBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: RoomTodoData) { binding.item = item }
     }
 }

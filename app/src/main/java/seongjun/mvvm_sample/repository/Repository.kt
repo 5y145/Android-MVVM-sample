@@ -1,12 +1,8 @@
 package seongjun.mvvm_sample.repository
 
-import android.content.Context
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Response
 import seongjun.mvvm_sample.model.RetrofitTodoData
 import seongjun.mvvm_sample.model.RoomTodoData
@@ -20,19 +16,10 @@ Response<type> : 레트로핏으로 통신할때의 반환형입니다.
     result.body : 실질적으로 받게되는 데이터입니다. `as Type`으로 객체 타입을 명시합니다.
  **/
 
-class Repository(context: Context) {
+class Repository(application : Application) {
 
     // Room Dao
-    val todoDao = AppDataBase.getInstance(context)!!.getTodoDao()
-
-    // Room Data
-    val roomTodoList: LiveData<List<RoomTodoData>> = roomSelectAllTodo()
-    var retrofitTodoList: MutableLiveData<List<RetrofitTodoData>> = MutableLiveData<List<RetrofitTodoData>>().apply { setValue(emptyList()) }
-
-    init {
-        retrofitReloadAllTodo()
-        Log.d("debug", "first reload")
-    }
+    private val todoDao = AppDataBase.getInstance(application)!!.getTodoDao()
 
     // Use Room
     fun roomSelectAllTodo(): LiveData<List<RoomTodoData>> {
@@ -48,21 +35,9 @@ class Repository(context: Context) {
     }
 
     // Use Retrofit
-    fun retrofitReloadAllTodo(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val result = retrofitSelectAllTodo()
-            retrofitTodoList.postValue(result)
-            Log.d("debug", "reload: $retrofitTodoList")
-        }
-    }
-
     suspend fun retrofitSelectAllTodo(): List<RetrofitTodoData> {
-        var result: List<RetrofitTodoData> = emptyList()
         val response = RetrofitInstance.api.selectAllTodo()
-        if (response.isSuccessful) {
-            result = response.body() as List<RetrofitTodoData>
-        }
-        return result
+        return if (response.isSuccessful) response.body() as List<RetrofitTodoData> else ArrayList()
     }
 
     suspend fun retrofitInsertTodo(todo: RetrofitTodoData) : Response<Unit> {
@@ -71,5 +46,14 @@ class Repository(context: Context) {
 
     suspend fun retrofitDeleteTodo(todo: RetrofitTodoData) : Response<Unit> {
         return RetrofitInstance.api.deleteTodo(todo.id)
+    }
+
+    companion object {
+        private var instance: Repository? = null
+
+        fun getInstance(application : Application): Repository? { // 싱글톤 패턴
+            if (instance == null) instance = Repository(application)
+            return instance
+        }
     }
 }

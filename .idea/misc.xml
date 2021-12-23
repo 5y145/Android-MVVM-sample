@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/JangSeongJun/Documents/AndroidProject/MVVM-sample/app/src/main/res/layout/activity_detail.xml" value="0.19583333333333333" />
-        <entry key="..\:/Users/JangSeongJun/Documents/AndroidProject/MVVM-sample/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/JangSeongJun/Documents/AndroidProject/MVVM-sample/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/JangSeongJun/Documents/AndroidProject/MVVM-sample/app/src/main/res/layout/item_main.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/JangSeongJun/Documents/AndroidProject/MVVM-sample/app/src/main/res/layout/item_retrofit.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/JangSeongJun/Documents/AndroidProject/MVVM-sample/app/src/main/res/layout/item_room.xml" value="0.37135416666666665" />
       </map>
     </option>
   </component>

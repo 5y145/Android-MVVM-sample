@@ -1,79 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Room Data"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRoom"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <EditText
-            android:id="@+id/et1"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="입력해주세요." />
-
-        <Button
-            android:id="@+id/btn1"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="등록" />
-    </LinearLayout>
+    <data>
+        <variable
+            name="viewModel"
+            type="seongjun.mvvm_sample.MainViewModel" />
+    </data>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Retrofit Data"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRetrofit"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Room Data List\nRong Click : Delete"/>
 
-        <EditText
-            android:id="@+id/et2"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="입력해주세요." />
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{viewModel.roomInput}"/>
 
-        <Button
-            android:id="@+id/btn2"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="등록" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRoom"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/et1"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="입력해주세요."
+                android:text="@={viewModel.roomInput}"/>
+
+            <Button
+                android:id="@+id/btn1"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.insertRoom()}"
+                android:text="등록" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Retrofit Data List\nRong Click : Delete"/>
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{viewModel.retrofitInput}"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRetrofit"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/et2"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="입력해주세요."
+                android:text="@={viewModel.retrofitInput}"/>
+
+            <Button
+                android:id="@+id/btn2"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.insertRetrofit()}"
+                android:text="등록" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>
