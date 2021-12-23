@@ -8,6 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import seongjun.mvvm_sample.databinding.ItemRoomBinding
 import seongjun.mvvm_sample.model.RoomTodoData
 
+/**
+리사이클러 뷰를 데이터 바인딩으로 구현하였습니다.
+클릭 이벤트를 액티비티에서 정의하도록 구성하였습니다.
+ **/
+
 class RoomAdapter(): RecyclerView.Adapter<RoomAdapter.Holder>() {
 
     private var list: List<RoomTodoData> = ArrayList()

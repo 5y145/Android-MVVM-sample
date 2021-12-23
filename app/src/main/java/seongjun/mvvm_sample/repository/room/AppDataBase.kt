@@ -25,7 +25,7 @@ abstract class AppDataBase: RoomDatabase() {
         private const val DB_NAME = "db_name"
         private var instance: AppDataBase? = null
 
-        fun getInstance(application : Application): AppDataBase? {
+        fun getInstance(application : Application): AppDataBase? { // singleton pattern
             if (instance == null) {
                 synchronized(this){
                     instance = Room.databaseBuilder(application, AppDataBase::class.java, DB_NAME).build()

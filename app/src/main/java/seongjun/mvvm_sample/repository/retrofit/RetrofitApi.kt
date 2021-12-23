@@ -8,13 +8,6 @@ import seongjun.mvvm_sample.model.RetrofitTodoData
 Rest API 서버와 통신하는 방법을 정의한 인터페이스입니다.
  **/
 
-/**
-getAllTodo : 투두리스트를 반환합니다.
-addTodo : 투두를 추가합니다.
-deleteTodo : 투두를 삭제합니다.
-deleteAllTodo : 모든 투두를 삭제합니다.
- **/
-
 interface RetrofitApi {
 
     @GET("todo")

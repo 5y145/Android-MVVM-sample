@@ -15,7 +15,7 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     var roomInput: MutableLiveData<String> = MutableLiveData()
     var retrofitInput: MutableLiveData<String> = MutableLiveData()
 
-    init {
+    init { // 초기화 시 서버에서 데이터를 받아옵니다.
         viewModelScope.launch {
             retrofitTodoList.value = repository.retrofitSelectAllTodo()
         }
@@ -43,7 +43,7 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         if (response.isSuccessful) retrofitTodoList.value = repository.retrofitSelectAllTodo()
     }
 
-    class Factory(private val application : Application) : ViewModelProvider.Factory { // 팩토리 패턴
+    class Factory(private val application : Application) : ViewModelProvider.Factory { // factory pattern
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return MainViewModel(Repository.getInstance(application)!!) as T
         }

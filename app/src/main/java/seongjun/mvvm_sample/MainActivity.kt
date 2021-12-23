@@ -23,18 +23,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setView()
-        setObserver()
+        setView() // 뷰에 관한 세팅
+        setObserver() // 뷰모델을 관찰합니다.
     }
 
     private fun setView() {
+        // 데이터 바인딩
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        // 화면 조작에 관한 일부 비즈니즈 로직을 포함합니다.
         binding.et1.addTextChangedListener {
             viewModel.roomInput.value = binding.et1.text.toString()
         }
 
+        // 화면 조작에 관한 일부 비즈니즈 로직을 포함합니다.
         binding.et2.addTextChangedListener {
             viewModel.retrofitInput.value = binding.et2.text.toString()
         }

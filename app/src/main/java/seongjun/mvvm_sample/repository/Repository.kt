@@ -10,7 +10,7 @@ import seongjun.mvvm_sample.repository.retrofit.RetrofitInstance
 import seongjun.mvvm_sample.repository.room.AppDataBase
 
 /**
-ViewMovel에서는 로컬에서 가져왔는지 원격으로 가져왔는지 신경쓰지않고 Repository를 통해 Model을 가져옵니다.
+ViewMovel에서는 로컬데이터인지 원격데이터인지 신경쓰지않고 Repository를 사용할 수 있습니다.
 Response<type> : 레트로핏으로 통신할때의 반환형입니다.
     result.isSuccessful : 통신에 성공했는지의 여부. 이때의 통신은 갔다 왔는가 그자체를 의미하는것입니다. 자세한 사항은 검색해 보아야합니다.
     result.body : 실질적으로 받게되는 데이터입니다. `as Type`으로 객체 타입을 명시합니다.
@@ -51,7 +51,7 @@ class Repository(application : Application) {
     companion object {
         private var instance: Repository? = null
 
-        fun getInstance(application : Application): Repository? { // 싱글톤 패턴
+        fun getInstance(application : Application): Repository? { // singleton pattern
             if (instance == null) instance = Repository(application)
             return instance
         }
