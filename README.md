@@ -32,7 +32,7 @@ JetPack을 활용한 MVVM repository 패턴 프로젝트의 예제입니다.
 
 # Architecture
 
-- `MVVM Repository`
+`MVVM Repository`
 
 # Setting
 
