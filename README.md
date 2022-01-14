@@ -3,12 +3,13 @@
 <br>
 
 # Android-MVVM-sample
-JetPack을 활용한 MVVM repository 패턴 프로젝트의 예제입니다.
 
 <p>
 <img src="https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=Android&logoColor=white"/>
 <img src="https://img.shields.io/badge/Kotlin-3178C6?style=flat-square&logo=Kotlin&logoColor=white"/>
 </p>
+ 
+JetPack을 활용한 MVVM repository 패턴 프로젝트의 예제입니다.
 
 <img src="https://user-images.githubusercontent.com/95672282/147233986-50ba83c8-b03f-4247-9c65-83579690431b.gif" width="25%" height="25%">
 
@@ -16,17 +17,7 @@ JetPack을 활용한 MVVM repository 패턴 프로젝트의 예제입니다.
 
 <br><br>
 
-# 📝 Introduce
-```
-MVVM repository 패턴을 구현한 예제입니다.
-설명이 필요한 부분에 주석을 달아 놓았습니다.
-
-💡Room과 Retrofit을 사용해 데이터를 가져오는 예제입니다.
-💡비동기 작업을 위해 Coroutine을 사용하였습니다.
-🔥단어를 꾹 누르면 데이터가 삭제됩니다.
-```
-
-# 🛠 Used Tech
+# Skill
 
  - `Kotlin`
  - `JetPack`
@@ -39,12 +30,11 @@ MVVM repository 패턴을 구현한 예제입니다.
  - `Retrofit`
  - `Coroutine`
 
-# 🏭 Architecture
+# Architecture
 
 - `MVVM Repository`
-<img src="https://user-images.githubusercontent.com/95672282/146952254-2e6508a4-b0a1-44f7-9593-e29d7b224c62.png" width="50%" height="50%">
 
-# ⚙️ Setting
+# Setting
 
 manifest
 ```
